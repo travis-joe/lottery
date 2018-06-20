@@ -2,37 +2,25 @@ pragma solidity ^0.4.0;
 
 contract Match {
 
-    uint8 mode = 1;
-    uint min = 1e8;
-    string desc = "";
-
-    // options: [
-    //   {
-    //     total: '100wei',
-    //     bets: [
-    //       {
-    //         player: "0x0000000000000000000",
-    //         amount: '3wei',
-    //       }
-    //     ]
-    //   },
-    // ]
+    uint8 gameType;
+    uint minimum;
+    string desc;
+    PoolType[] totalPool;
 
     struct Bet {
         address player;
         uint amount;
     }
 
-    struct Option {
+    struct PoolType {
         uint total;
         Bet[] bets;
     }
 
-    Option[] options;
-
-
-    constructor (uint8 mode, uint min, string desc) public {
-
+    constructor (uint8 gameType, uint minimum, string desc) public {
+        gameType = gameType;
+        minimum = minimum;
+        desc = desc;
     }
 
     // 下注
@@ -53,13 +41,13 @@ contract MatchFactory {
         owner = msg.sender;
     }
 
-    function createMatch(uint8 mode, uint min, string desc) public returns (uint) {
-        address matching = new Match(mode, min, desc);
+    function createMatch(uint8 gameType, uint minimum, string desc) public returns (uint) {
+        address matching = new Match(gameType, minimum, desc);
         matches.push(matching);
         return matches.length - 1;
     }
 
-    function getMatches(uint8 mode, uint32 page, uint8 pageSize) public {
+    function getMatches(uint8 gameType, uint32 page, uint8 pageSize) public {
 
     }
 
