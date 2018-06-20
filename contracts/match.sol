@@ -6,7 +6,7 @@ contract Match {
     uint minimum;
     string desc;
     address manager;
-    uint16 commissionPercent = 1000;
+    uint16 commissionPercent = 10;
     State state;
 
     enum State {uninitiated, began, finished}
@@ -43,7 +43,7 @@ contract Match {
 
     function calcOdds() private {
         for (uint8 i = 0; i < results; i++) {
-            allPools[i].odds = allPools[i].total / (address(this).balance / commissionPercent);
+            allPools[i].odds =  (address(this).balance * (100 - commissionPercent)) / allPools[i].total ;
         }
     }
 
