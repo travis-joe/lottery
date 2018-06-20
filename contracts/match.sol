@@ -5,7 +5,7 @@ contract Match {
     uint minimum;
     string desc;
     address manager;
-    fixed commission = 1 / 1000;
+    uint16 commissionPercent = 1000;
 
     PoolType[] public allPools;
 
@@ -17,7 +17,7 @@ contract Match {
     struct PoolType {
         uint total;
         Bet[] bets;
-        fixed odds; //by default 128*18
+        uint odds;
     }
 
     constructor (uint8 gameResults, uint min, string description) public {
@@ -37,7 +37,7 @@ contract Match {
 
     function calcOdds() private {
         for(uint8 i = 0; i < results; i++) {
-            allPools[i].odds = allPools[i].total / (address(this).balance * commission);
+            allPools[i].odds = allPools[i].total / (address(this).balance / commissionPercent);
         }
     }
 
