@@ -20,22 +20,20 @@ contract Match {
         results = gameResults;
         minimum = min;
         desc = description;
-        // poolTotal = new PoolType[](results);
+        poolTotal = new PoolType[](results);
     }
 
     function takeGamble(uint8 result, uint amount) public {
         Bet memory bet = Bet({player: msg.sender, amount: amount});
-//        poolTotal[result].bets.push(bet);
-//        poolTotal[result].total += amount;
+        // poolTotal[result].bets.push(bet);
+        // poolTotal[result].total += amount;
     }
 
 }
 
 
 contract MatchFactory {
-
     address owner;
-
     address[] matches;
 
     constructor () public {
