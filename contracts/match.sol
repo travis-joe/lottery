@@ -4,7 +4,7 @@ contract Match {
     uint8 results;
     uint minimum;
     string desc;
-    PoolType[] poolTotal;
+    PoolType[] public poolTotal;
 
     struct Bet {
         address player;
@@ -23,12 +23,17 @@ contract Match {
         poolTotal.length = gameResults;
     }
 
-    function takeGamble(uint8 result, uint amount) public {
-        Bet memory bet = Bet({player: msg.sender, amount: amount});
+    function takeGamble(uint8 result) public inResultAndMoreThanMin(result) payable{
+        Bet memory bet = Bet({player : msg.sender, amount : msg.value});
         poolTotal[result].bets.push(bet);
-        poolTotal[result].total += amount;
+        poolTotal[result].total += msg.value;
     }
 
+    modifier inResultAndMoreThanMin(uint8 result) {
+        require(results >= result + 1);
+        require(msg.value >= minimum);
+        _;
+    }
 }
 
 
