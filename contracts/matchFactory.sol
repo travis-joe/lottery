@@ -16,10 +16,10 @@ contract MatchFactory {
     }
 
     function getMatches(uint32 page, uint8 pageSize) view public returns (address[]){
-        address[] memory result = new address[](page);
+        address[] memory paginatedRes = new address[](page);
         for (uint i = pageSize * page - pageSize; i < pageSize * page; i++) {
             result[i] = matches[i];
         }
-        return result;
+        return paginatedRes;
     }
 }
