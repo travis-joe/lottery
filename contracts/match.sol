@@ -35,6 +35,7 @@ contract Match {
     }
 
     function takeGamble(uint8 result) public inResultAndMoreThanMin(result) payable {
+        require(state == State.uninitiated);
         Bet memory bet = Bet({player : msg.sender, amount : msg.value, isPayed : false});
         allPools[result].bets.push(bet);
         allPools[result].total += msg.value;
@@ -47,7 +48,13 @@ contract Match {
         }
     }
 
+    function activeMatch() public managerOnly{
+        require(state == State.uninitiated);
+        state = State.began;
+    }
+
     function finalize(uint8 result) managerOnly public {
+        require(state == State.began);
         winning = result;
         state = State.finished;
     }
