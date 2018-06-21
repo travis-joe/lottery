@@ -9,18 +9,17 @@ contract MatchFactory {
         owner = msg.sender;
     }
 
-    function createMatch(uint8 results, uint minimum, string desc) public returns (uint) {
-        address matching = new Match(results, minimum, desc);
+    function createMatch(uint8 matchResults, uint minimum, string desc) public returns (uint) {
+        address matching = new Match(matchResults, minimum, desc);
         matches.push(matching);
         return matches.length - 1;
     }
 
-    function getMatches(uint8 results, uint32 page, uint8 pageSize) public {
-
+    function getMatches(uint32 page, uint8 pageSize) view public returns (address[]){
+        address[] memory result = new address[](page);
+        for (uint i = pageSize * page - pageSize; i < pageSize * page; i++) {
+            result[i] = matches[i];
+        }
+        return result;
     }
-
-    function settlement(uint key) public {
-
-    }
-
 }
