@@ -6,7 +6,7 @@ contract Match {
     uint minimum;
     string desc;
     address manager;
-    uint16 commissionPercent = 10;
+    uint16 constant commissionPercent = 3;
     State state;
 
     enum State {uninitiated, began, finished}
